@@ -10,13 +10,7 @@
 # Licence:     free
 #-------------------------------------------------------------------------------
 
-'''
-    place_holder
-    @todo
-
-'''
 def place_holder(query, key, escape, *args):
-    ''' UserWarning '''
     if len(key) > 1:
         raise Exception("You should specify 'key' not unicode or char.")
 

@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
 #-------------------------------------------------------------------------------
 # Name:        weightrandom
-# Purpose:
-#
 # Author:      jun kimura
-#
 # Created:     03/12/2011
 # Copyright:   (c) jun kimura 2011
 # Licence:     free
 #-------------------------------------------------------------------------------
-#!/usr/bin/env python
 
 from random import uniform
 
