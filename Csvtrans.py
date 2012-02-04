@@ -1,25 +1,30 @@
-#!C:\Python25\python.exe
 # -*- coding: utf-8 -*-
-# http://sourceforge.net/projects/py2exe/files/py2exe/0.6.6/
 import os
 import sys
 import re
 import csv
 import shutil
 
+# for py2exe
 reload(sys)
 sys.setdefaultencoding('UTF-8')
 
-#第一引数に変換対象のファイル、第二引数に変換テーブルをCSVで指定
-# $ python Csvtrans.py "<table>" "<target-directory>" "<extension>"
-# $ python setup.py py2exe -packages encodings
+__usage__ = '''
+第一引数に変換対象のファイル、第二引数に変換テーブルを記述したCSVファイルのパスを指定します
+$ python Csvtrans.py "<table>" "<target-directory>" "<extension>"
+$ python setup.py py2exe -packages encodings
+'''
 
 class Csvtrans(object):
+    
     def __init__(self):
         pass
     
-# 変換テーブル作成メソッド
     def create(self, table):
+        '''
+        @summary: 
+            変換テーブル作成メソッド            
+        '''
         #csv_dialectを作成
         csv.register_dialect('escaped', escapechar='\\', doublequote=True, quoting=csv.QUOTE_MINIMAL)
         try:
@@ -37,27 +42,23 @@ class Csvtrans(object):
             print row
 # 対象のファイルを変換テーブルで変換する targetには対象のファイルパス
     def convert(self, target):
-        # 元データの読み込み
+        '''
+        @summary: 
+            元データの読み込みを行います
+        '''
         try:
             f = file(target, 'r')
-            try:
-                data = f.read()
-            except:
-                print "%sが読み込めません。" % target
-                raise
-            finally:
-                f.close()
+            data = f.read()
         except IOError:
-            print "%sが開くことができません。" % target
             print 'except: Cannot open "%s"' % target
             return False
-        except:
-            raise
+        finally:
+            f.close()
         
         data_enc = guessEncoding(data)
         data = data.decode(data_enc, 'strict')
    
-       #バックアップファイルの作成
+        #バックアップファイルの作成
         try:
             shutil.copyfile(target,target + '~')
         except:
@@ -86,8 +87,6 @@ class Csvtrans(object):
                 raise
         finally:
             f.close()
-                   
-        # print data.encode('shift-jis')   
         
 
 # 引数に指定したテキストの文字コードを推測する        
